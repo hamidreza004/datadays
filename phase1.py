@@ -6,7 +6,6 @@ from google import google
 
 search_cnt = 0
 
-
 def detect_brand(info):
     # s = info.title + " # # # " + info.desc
     s = info.title
@@ -142,7 +141,6 @@ def detect_brand(info):
                'xiaomi',
            ]): possibilities.append('XIAOMI')
 
-    #	print(posib)
     info.brand = possibilities[0] if len(possibilities) == 1 else 'Unknown'
     return info
 
@@ -179,10 +177,14 @@ def google_detect(info):
 
     best = max(lst, key=score)
 
+    if score(best) == 0:
+        print('bad ad: {}'.format(info.title))
+
     global search_cnt
     search_cnt += 1
 
     print('search {}'.format(search_cnt), file=sys.stderr)
+
     info.brand = best
 
     return info
