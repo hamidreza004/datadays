@@ -53,11 +53,11 @@ def detect_brand(info):
                'lg',
            ]): possibilities.append('LG')
 
-    if has(bag,
-           [
-               'جیالایکس',
-               'glx',
-           ]): possibilities.append('GLX')
+    # if has(bag,
+    #        [
+    #            'جیالایکس',
+    #            'glx',
+    #        ]): possibilities.append('GLX')
 
     if has(bag,
            [
@@ -114,34 +114,40 @@ def detect_brand(info):
 
     if has(bag,
            [
+               'اریکسون',
+               'ericsson',
+           ]): possibilities.append('ERICSSON')
+
+    if has(bag,
+           [
                'htc',
                'اچتیسی',
            ]): possibilities.append('HTC')
 
-    if has(bag,
-           [
-               'مایکروسافت',
-               'ماکروسافت',
-               'microsoft',
-           ]): possibilities.append('MICROSOFT')
+    # if has(bag,
+    #        [
+    #            'مایکروسافت',
+    #            'ماکروسافت',
+    #            'microsoft',
+    #        ]): possibilities.append('MICROSOFT')
 
     if has(bag,
            [
                'بلکبری',
                'blackberry',
            ]): possibilities.append('BLACKBERRY')
-
-    if has(bag,
-           [
-               'انایسی',
-               'nec',
-           ]): possibilities.append('NEC')
-
-    if has(bag,
-           [
-               'شیاومی',
-               'xiaomi',
-           ]): possibilities.append('XIAOMI')
+    #
+    # if has(bag,
+    #        [
+    #            'انایسی',
+    #            'nec',
+    #        ]): possibilities.append('NEC')
+    #
+    # if has(bag,
+    #        [
+    #            'شیاومی',
+    #            'xiaomi',
+    #        ]): possibilities.append('XIAOMI')
 
     info.brand = possibilities[0] if len(possibilities) == 1 else 'Unknown'
     return info
@@ -150,7 +156,7 @@ def detect_brand(info):
 def google_detect(info):
     if info.brand != 'Unknown': return info
 
-    lst = ['ACER', 'ALCATEL', 'ALLVIEW', 'AMAZON', 'AMOI', 'APPLE',
+    '''lst = ['ACER', 'ALCATEL', 'ALLVIEW', 'AMAZON', 'AMOI', 'APPLE',
            'ARCHOS', 'ASUS', 'AT&T', 'BENEFON', 'BENQ', 'BENQ-SIMENS',
            'BIRD', 'BLACKBERRY', 'BLACKVIEW', 'BLU', 'BOSCH', 'BQ',
            'CASIO', 'CAT', 'CELKON', 'CHEA', 'COOLPAD', 'DELL', 'EMPORIA',
@@ -166,7 +172,14 @@ def google_detect(info):
            'SONY ERICSSON', 'SPICE', 'T-MOBILE', 'TECNO', 'TEL.ME.', 'TELIT', 'THURAYA',
            'TOSHIBA', 'UNNECTO', 'VERTU', 'VERYKOOL', 'VIVO', 'VK MOBILE', 'VODAFONE',
            'WIKO', 'WND', 'XCUTE', 'XIAOMI', 'XOLO', 'YEZZ', 'YOTA', 'YU', 'ZTE', 'GLX',
-           ]
+           ]'''
+
+    lst = ['SONY', 'SAMSUNG', 'APPLE',
+           'NOKIA', 'HUAWEI', 'ZTE',
+           'LG', 'HTC', 'BLACKBERRY',
+           'AMAZON', 'ERICSSON', 'LENOVO',
+           'MOTOROLA', 'FARASSOO', 'DELL',
+           'ACER', 'ASUS']
 
     text = ''
     ntry = 0
@@ -214,7 +227,28 @@ def main():
     print('Final Unknown indices: {} '.format(data.index[data.brand == 'Unknown'].tolist()), file=sys.stderr)
 
     data.to_csv('output.csv')
-    data['brand'].to_csv('output.txt', index=False)
+
+    dic = {
+        'SONY':'Sony::سونی',
+        'SAMSUNG':'Samsung::سامسونگ',
+        'APPLE': 'Apple::اپل',
+        'NOKIA': 'Nokia::نوکیا',
+        'HUAWEI': 'Huawei::هوآوی',
+        'ZTE': 'ZTE::زدتی‌ای',
+        'LG': 'LG::ال‌جی',
+        'HTC':'HTC::اچ‌تی‌سی',
+        'BALCKBERRY':'BlackBerry::بلک‌بری',
+        'AMAZON':'Amazon::آمازون',
+        'ERICSSON':'Sony Ericsson::سونی اریکسون',
+        'LENOVO':'Lenovo::لنوو',
+        'MOTOROLA':'Motorola::موتورلا',
+        'FARASSOO':'Farassoo::فراسو',
+        'DELL':'Dell::دل',
+        'ACER':'Acer::ایسر',
+        'ASUS':'Asus::ایسوس'
+    }
+
+    data['brand'].map(dic).to_csv('output.txt', index=False)
 
 
 main()
