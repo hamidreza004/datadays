@@ -165,7 +165,7 @@ def google_detect(info):
            'REALME', 'SAGEM', 'SAMSUNG', 'SENDO', 'SEWON', 'SHARP', 'SIMENS', 'SONIM', 'SONY',
            'SONY ERICSSON', 'SPICE', 'T-MOBILE', 'TECNO', 'TEL.ME.', 'TELIT', 'THURAYA',
            'TOSHIBA', 'UNNECTO', 'VERTU', 'VERYKOOL', 'VIVO', 'VK MOBILE', 'VODAFONE',
-           'WIKO', 'WND', 'XCUTE', 'XIAOMI', 'XOLO', 'YEZZ', 'YOTA', 'YU', 'ZTE',
+           'WIKO', 'WND', 'XCUTE', 'XIAOMI', 'XOLO', 'YEZZ', 'YOTA', 'YU', 'ZTE', 'GLX',
            ]
 
     text = ''
