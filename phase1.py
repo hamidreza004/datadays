@@ -44,7 +44,7 @@ def detect_brand(info):
                '5s',
                '4s',
                'سیکساس',
-               'فایواسگ',
+               'فایواس',
            ]): possibilities.append('APPLE')
 
     if has(bag,
@@ -67,8 +67,6 @@ def detect_brand(info):
                'galaxy',
                'گلکسی',
                'گالاکسی',
-               'نکسوس',
-               'nexus',
                'j1',
                'j2',
                'j3',
@@ -87,6 +85,8 @@ def detect_brand(info):
            [
                'نوکیا',
                'nokia',
+               'lumia',
+               'لومیا',
            ]): possibilities.append('NOKIA')
 
     if has(bag,
@@ -104,6 +104,7 @@ def detect_brand(info):
            [
                'z1',
                'experia',
+               'xperia',
                'sony',
                'سونی',
                'سونی',
@@ -166,26 +167,30 @@ def google_detect(info):
            'WIKO', 'WND', 'XCUTE', 'XIAOMI', 'XOLO', 'YEZZ', 'YOTA', 'YU', 'ZTE',
            ]
 
-    search_results = google.search(info.title + ' mobile phone', 1)
     text = ''
-    for x in search_results:
-        text += x.description + ' ' + x.name + ' '
-    text = text.lower()
+    ntry = 0
+
+    while(text == '' and ntry < 3):
+        search_results = google.search(info.title + ' mobile phone', 1)
+        for x in search_results:
+            text += x.description + ' ' + x.name + ' '
+        text = text.lower()
+        ntry += 1
 
     def score(word):
-        return text.count(word.lower())
+        return (text.count(word.lower() + ' ') + text.count(word.lower()), len(word))
 
     best = max(lst, key=score)
-
-    if score(best) == 0:
-        print('bad ad: {}'.format(info.title))
 
     global search_cnt
     search_cnt += 1
 
     print('search {}'.format(search_cnt), file=sys.stderr)
 
-    info.brand = best
+    if score(best) == 0:
+        print('bad ad: {} \n {}'.format(info.title, text), file=sys.stderr)
+    else:
+        info.brand = best
 
     return info
 
@@ -200,11 +205,15 @@ def main():
     print('Unknowns before google search: {} \n {} \n {}'.format((data.brand == 'Unknown').sum(),
                                                                  data.index[data.brand == 'Unknown'].tolist(),
                                                                  data[data.brand == 'Unknown'].sample(3,
-                                                                                                      random_state=204)),
+                                                                                                        random_state=204)),
           file=sys.stderr)
 
     data = data.apply(google_detect, axis=1)
+
+    print('Final Unknown indices: {} '.format(data.index[data.brand == 'Unknown'].tolist()), file=sys.stderr)
+
     data.to_csv('output.csv')
+    data['brand'].to_csv('output.txt', index=False)
 
 
 main()
