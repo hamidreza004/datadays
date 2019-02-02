@@ -62,6 +62,7 @@ def detect_brand(info):
     if has(bag,
            [
                'سامسونگ',
+               'سامسنگ',
                'ace',
                'samsung',
                'galaxy',
