@@ -6,6 +6,7 @@ from google import google
 
 search_cnt = 0
 
+
 def detect_brand(info):
     # s = info.title + " # # # " + info.desc
     s = info.title
@@ -184,7 +185,7 @@ def google_detect(info):
     text = ''
     ntry = 0
 
-    while(text == '' and ntry < 3):
+    while (text == '' and ntry < 3):
         search_results = google.search(info.title + ' mobile phone', 1)
         for x in search_results:
             text += x.description + ' ' + x.name + ' '
@@ -219,7 +220,7 @@ def main():
     print('Unknowns before google search: {} \n {} \n {}'.format((data.brand == 'Unknown').sum(),
                                                                  data.index[data.brand == 'Unknown'].tolist(),
                                                                  data[data.brand == 'Unknown'].sample(3,
-                                                                                                        random_state=204)),
+                                                                                                      random_state=204)),
           file=sys.stderr)
 
     data = data.apply(google_detect, axis=1)
@@ -229,23 +230,23 @@ def main():
     data.to_csv('output.csv')
 
     dic = {
-        'SONY':'Sony::سونی',
-        'SAMSUNG':'Samsung::سامسونگ',
+        'SONY': 'Sony::سونی',
+        'SAMSUNG': 'Samsung::سامسونگ',
         'APPLE': 'Apple::اپل',
         'NOKIA': 'Nokia::نوکیا',
         'HUAWEI': 'Huawei::هوآوی',
         'ZTE': 'ZTE::زدتی‌ای',
         'LG': 'LG::ال‌جی',
-        'HTC':'HTC::اچ‌تی‌سی',
-        'BALCKBERRY':'BlackBerry::بلک‌بری',
-        'AMAZON':'Amazon::آمازون',
-        'ERICSSON':'Sony Ericsson::سونی اریکسون',
-        'LENOVO':'Lenovo::لنوو',
-        'MOTOROLA':'Motorola::موتورلا',
-        'FARASSOO':'Farassoo::فراسو',
-        'DELL':'Dell::دل',
-        'ACER':'Acer::ایسر',
-        'ASUS':'Asus::ایسوس'
+        'HTC': 'HTC::اچ‌تی‌سی',
+        'BALCKBERRY': 'BlackBerry::بلک‌بری',
+        'AMAZON': 'Amazon::آمازون',
+        'ERICSSON': 'Sony Ericsson::سونی اریکسون',
+        'LENOVO': 'Lenovo::لنوو',
+        'MOTOROLA': 'Motorola::موتورلا',
+        'FARASSOO': 'Farassoo::فراسو',
+        'DELL': 'Dell::دل',
+        'ACER': 'Acer::ایسر',
+        'ASUS': 'Asus::ایسوس'
     }
 
     data['brand'].map(dic).to_csv('output.txt', index=False)
