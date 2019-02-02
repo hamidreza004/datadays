@@ -178,15 +178,16 @@ def google_detect(info):
 
     best = max(lst, key=score)
 
+    info.brand = best
+
     if score(best) == 0:
         print('bad ad: {}'.format(info.title))
+        info.brand = "SAMSUNG"
 
     global search_cnt
     search_cnt += 1
 
     print('search {}'.format(search_cnt), file=sys.stderr)
-
-    info.brand = best
 
     return info
 
