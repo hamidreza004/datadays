@@ -179,7 +179,7 @@ def google_detect(info):
         ntry += 1
 
     def score(word):
-        return (text.count(word.lower() + ' ') + text.count(word.lower()), len(word))
+        return text.count(word.lower() + ' ') + text.count(word.lower()), len(word)
 
     best = max(lst, key=score)
 
@@ -188,7 +188,7 @@ def google_detect(info):
 
     print('search {}'.format(search_cnt), file=sys.stderr)
 
-    if score(best) == 0:
+    if score(best)[0] == 0:
         print('bad ad: {} \n {}'.format(info.title, text), file=sys.stderr)
     else:
         info.brand = best
