@@ -6,8 +6,8 @@ from google import google
 
 def main():
 
-    filename = sys.argv[1] if len(sys.argv) > 1 else 'sample_mobile_data_1000.csv'
-    data = pd.read_csv(filename)
+    filename = sys.argv[1] if len(sys.argv) > 1 else 'divar_posts_dataset.csv'
+    data = pd.read_csv(filename, lineterminator="\n")
     print("end")
 
 main()
