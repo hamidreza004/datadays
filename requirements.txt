@@ -6,7 +6,7 @@ future==0.17.1
 idna==2.8
 multidict==4.5.2
 nltk==3.4
-numpy==1.16.1
+numpy==1.22.0
 pandas==0.24.0
 python-dateutil==2.7.5
 pytz==2018.9
